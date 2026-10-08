@@ -5,7 +5,7 @@ sms:'<label for="a">Suspicious SMS</label><textarea id="a" placeholder="Paste th
 email:'<label for="a">Sender Email</label><input id="a"><label for="b">Subject</label><input id="b"><label for="c">Email Content</label><textarea id="c"></textarea><label for="d">Reply-To (optional)</label><input id="d"><button class="btn p" data-run>Analyze Email</button><div id="o"></div>',
 qr:'<button class="btn p" id="cam">📷 Use Camera</button><button class="btn" id="upb">📁 Upload QR Image</button><input type="file" id="up" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" hidden><div class="drop" id="drop">Drag &amp; drop a QR image here (JPG, PNG, WEBP)</div><div id="camw"></div><p class="mu">Camera access is used only to detect the QR code. The camera stops automatically after scanning or when you close the scanner. Nothing is recorded or uploaded, and the destination is never opened.</p><div id="o"></div>'};
 function show(t,pre){stopCam();cur=t;if(t==="dash")setTimeout(dash,0);document.querySelectorAll(".tabs button").forEach(b=>b.setAttribute("aria-selected",b.dataset.t===t));m.innerHTML=P[t];if(pre&&$("#a")){$("#a").value=pre}}
-function record(r){deskStore.get(["keep","hist"],o=>{if(o.keep===false)return;const h=o.hist||[];h.unshift({t:r.type,s:r.status,k:r.trust,d:new Date().toLocaleString()});deskStore.set({hist:h.slice(0,50)})})}
+function record(r){chrome.storage.local.get(["keep","hist"],o=>{if(o.keep===false)return;const h=o.hist||[];h.unshift({t:r.type,s:r.status,k:r.trust,d:new Date().toLocaleString()});chrome.storage.local.set({hist:h.slice(0,50)})})}
 function result(r){record(r);const c={"SAFE":["#16a34a","🟢 Safe"],"SUSPICIOUS":["#d97706","🟠 Suspicious"],"PHISHING DETECTED":["#dc2626","🔴 Phishing Detected"]}[r.status];
 $("#o").innerHTML=`<div class="res" aria-live="polite">${r.qrType?`<h3>QR Code Detected (${esc(r.qrType)})</h3>`:""}${r.destination?`<p>Destination: <code>${esc(r.destination)}</code></p>`:""}${r.upi?`<p class="mu">Payee: ${esc(r.upi.payee)} · Handle: ${esc(r.upi.handle)} · Amount: ${esc(r.upi.amount)}</p>`:""}
 <div class="tr"><div class="ring" style="--p:${r.trust};--c:${c[0]}"><b>${r.trust}</b></div><div><div class="mu">Trust Score</div><span class="badge" style="background:${c[0]}">${c[1]}</span></div></div>
@@ -39,11 +39,12 @@ async function torch(){try{tOn=!tOn;await stream.getVideoTracks()[0].applyConstr
 function switchCam(){facing=facing==="environment"?"user":"environment";startCam()}
 addEventListener("pagehide",()=>stopCam());document.addEventListener("visibilitychange",()=>{if(document.hidden)stopCam(true)});
 const q=new URLSearchParams(location.search),t0=q.get("tab")||"link";
-deskStore.get("prefill",r=>{const pf=r.prefill;deskStore.remove("prefill");show(t0,pf&&pf.tab===t0?pf.text:"");if(pf&&pf.note&&document.querySelector("#o"))document.querySelector("#o").innerHTML='<p class="err" role="alert">'+esc(pf.note)+"</p>";if(pf&&pf.tab===t0){if(pf.qr)handle(pf.qr);else if(pf.none)fail(new Error("QR code could not be detected."));else if(pf.auto&&document.querySelector("[data-run]"))document.querySelector("[data-run]").click()}});
+chrome.storage.local.get("prefill",r=>{const pf=r.prefill;chrome.storage.local.remove("prefill");show(t0,pf&&pf.tab===t0?pf.text:"")});
 
-function dash(){deskStore.get(["keep","hist"],o=>{const h=o.hist||[],n=k=>h.filter(x=>x.s===k).length;
+function dash(){chrome.storage.local.get(["keep","hist"],o=>{const h=o.hist||[],n=k=>h.filter(x=>x.s===k).length;
 $("#dsh").innerHTML=`<h3>Protection Dashboard</h3><div class="st"><div><b>${h.length}</b><span>Scans</span></div><div><b>${n("SAFE")}</b><span>Safe</span></div><div><b>${n("SUSPICIOUS")}</b><span>Suspicious</span></div><div><b>${n("PHISHING DETECTED")}</b><span>Phishing</span></div></div>
 <p class="mu">By type: ${["Link","SMS","Email","QR"].map(t=>t+" "+h.filter(x=>x.t===t).length).join(" · ")}</p>
 <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="kp" style="width:auto" ${o.keep===false?"":"checked"}> Keep scan history on this device (type, result and score only)</label>
 <h4>Recent Scans</h4>${h.length?`<table><tr><th>Type</th><th>When</th><th>Result</th><th>Trust</th></tr>${h.slice(0,10).map(x=>`<tr><td>${esc(x.t)}</td><td>${esc(x.d)}</td><td>${esc(x.s)}</td><td>${x.k}</td></tr>`).join("")}</table>`:'<p class="mu">No scans yet.</p>'}<button class="btn" id="clr">Clear history</button>`;
-$("#kp").onchange=e=>deskStore.set({keep:e.target.checked});$("#clr").onclick=()=>deskStore.set({hist:[]},dash)})}
+$("#kp").onchange=e=>chrome.storage.local.set({keep:e.target.checked});$("#clr").onclick=()=>chrome.storage.local.set({hist:[]},dash)})}
+
