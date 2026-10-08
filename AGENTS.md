@@ -8,4 +8,4 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
-- The Chrome/Edge extension source lives in extension/ and the site serves it zipped as public/safescan-extension.zip (re-zip after edits) — it replaced the Electron desktop app and the on-site protection widget, so the shield only exists in the extension.
+- Two shields: extension/ (Chrome/Edge, served as public/safescan-extension.zip) works inside the browser; desktop/ (Electron) floats over all of Windows. The packaged Windows build is too large for public/, so it is handed over as a file — the on-site widget was removed.
