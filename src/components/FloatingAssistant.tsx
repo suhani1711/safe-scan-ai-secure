@@ -6,7 +6,7 @@ const ITEMS = [
   { to: "/scan/link", label: "🔗 Link Protection" },
   { to: "/scan/mail", label: "📧 Email Protection" },
   { to: "/scan/qr", label: "🔳 Scan QR" },
-  { to: "/extension", label: "🛡️ Background Protection" },
+  { to: "/extension", label: "🛡️ Shield Extension" },
   { to: "/dashboard", label: "📊 Protection Status" },
   { to: "/help", label: "🚨 Emergency Scam Help" },
 ] as const;
