@@ -1,9 +1,0 @@
-<!doctype html><meta charset="utf-8"><style>html,body{margin:0;width:80px;height:80px;background:transparent;overflow:hidden;user-select:none}
-#f{width:56px;height:56px;margin:12px;border-radius:50%;border:0;cursor:grab;background:linear-gradient(135deg,#3b5bff,#7c3aed);box-shadow:0 3px 9px rgba(47,91,255,.5);display:grid;place-items:center;touch-action:none}
-#f:hover{filter:brightness(1.1)}#f:focus-visible{outline:3px solid #fff}</style>
-<button id="f" aria-label="SafeScan quick security scan" title="SafeScan: click for menu, drag to move"><svg width="30" height="34" viewBox="0 0 30 34"><path d="M15 1 2 6v10c0 8 5.5 14 13 17 7.5-3 13-9 13-17V6z" fill="#5eb3e8" stroke="#f0c14b" stroke-width="2"/><path d="M15 1v32C7.5 30 2 24 2 16V6z" fill="#3b7fd4"/></svg></button>
-<script>const f=document.getElementById("f");let d=null,moved=false;
-f.onpointerdown=e=>{d={x:e.screenX,y:e.screenY};moved=false;f.setPointerCapture(e.pointerId);desk.dragStart()};
-f.onpointermove=e=>{if(!d)return;const dx=e.screenX-d.x,dy=e.screenY-d.y;if(!moved&&Math.hypot(dx,dy)<5)return;moved=true;desk.dragMove(dx,dy)};
-f.onpointerup=()=>{d=null;desk.dragEnd();if(!moved)desk.menu()};
-f.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();desk.menu()}};</script>
