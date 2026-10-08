@@ -37,7 +37,6 @@ function ScanMenu({
     <div
       role="menu"
       aria-label="Scanning options"
-      style={{ background: "var(--color-background)" }}
       className={cn(
         "glass z-50 rounded-xl border border-border p-1.5 shadow-2xl",
         className,

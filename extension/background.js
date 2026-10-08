@@ -9,3 +9,6 @@ if(msg.capture&&sender.tab){chrome.tabs.captureVisibleTab(sender.tab.windowId,{f
 if(msg.open){const tab=["link","sms","email","qr"].includes(msg.open)?msg.open:"link";
 const go=()=>chrome.windows.create({url:chrome.runtime.getURL("scanner.html?tab="+tab),type:"popup",width:460,height:720,focused:true});
 if(msg.text)chrome.storage.local.set({prefill:{tab,text:String(msg.text).slice(0,5000)}},go);else go()}});
+// Show the shield right away in every open tab of every window (no reload needed)
+async function injectAll(){const tabs=await chrome.tabs.query({});for(const t of tabs){if(!t.id||!/^(https?|file):/.test(t.url||""))continue;chrome.scripting.executeScript({target:{tabId:t.id},files:["analyze.js","content.js"]}).catch(()=>{})}}
+chrome.runtime.onInstalled.addListener(injectAll);chrome.runtime.onStartup.addListener(injectAll);

@@ -44,7 +44,7 @@ function Ext() {
         <h2 className="font-display text-xl font-semibold">What it does</h2>
         <ul className="mt-4 space-y-2 text-sm">
           <li>🛡️ Floating shield on every website, in every window — drag it anywhere</li>
-          <li>⚡ Reload already-open tabs after installing to show the shield</li>
+          <li>⚡ Appears instantly in tabs that are already open, no reload needed</li>
           <li>📝 Scan text you've selected on any page</li>
           <li>✂️ Snip a QR code on the screen, or use camera/upload</li>
           <li>🔗 Links, SMS, Mail and QR checks — turn the shield on or off from the toolbar</li>
@@ -65,7 +65,7 @@ function Ext() {
           <li>Open <b>chrome://extensions</b> (or <b>edge://extensions</b>).</li>
           <li>Turn on <b>Developer mode</b> (top-right).</li>
           <li>Click <b>Load unpacked</b> and choose the unzipped folder.</li>
-          <li>Reload open website tabs. The shield appears bottom-right in your browser windows.</li>
+          <li>The shield appears bottom-right on every website in all your windows.</li>
         </ol>
       </div>
     </div>
