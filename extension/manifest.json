@@ -1,12 +1,10 @@
 {
  "manifest_version": 3,
  "name": "SafeScan AI Shield",
- "version": "1.5.0",
- "description": "A floating shield on every website in every browser window: check pages, links and selected text. Nothing is sent anywhere.",
+ "version": "1.4.0",
+ "description": "A floating shield you control: check the current page or text you select. Nothing is sent anywhere.",
  "permissions": [
-  "storage",
-  "scripting",
-  "tabs"
+  "storage"
  ],
  "action": {
   "default_popup": "popup.html",
@@ -18,17 +16,18 @@
  "content_scripts": [
   {
    "matches": [
-    "<all_urls>"
+    "http://*/*",
+    "https://*/*"
    ],
    "js": [
     "analyze.js",
     "content.js"
    ],
-   "run_at": "document_idle",
-   "match_about_blank": true
+   "run_at": "document_idle"
   }
  ],
  "host_permissions": [
-  "<all_urls>"
+  "http://*/*",
+  "https://*/*"
  ]
 }
