@@ -38,7 +38,7 @@ function ScanMenu({
       role="menu"
       aria-label="Scanning options"
       className={cn(
-        "glass z-50 rounded-xl border border-border p-1.5 shadow-2xl",
+        "z-50 rounded-xl border border-border bg-popover p-1.5 shadow-2xl",
         className,
       )}
     >
